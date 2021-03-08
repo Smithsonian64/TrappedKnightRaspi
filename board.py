@@ -1,5 +1,7 @@
 import numpy
 import piece
+import pygame
+import sys
 
 class Board:
     def __init__(self, size):
@@ -7,12 +9,18 @@ class Board:
         self.squares = self.makespiral(size)
         self.visited = numpy.full((size, size), False, dtype=bool)
         self.visited[int(numpy.floor(size / 2 - 1))][int(numpy.floor(size / 2 - 1))] = True
-        self.piece = piece.Piece((int(numpy.floor(size / 2) - 1), int(numpy.floor(size / 2) - 1)))
+        self.piece = piece.Piece((int(numpy.floor(size / 2) - 1), int(numpy.floor(size / 2) - 1)), 'random')
         
-
-        print(self.squares)
+        
+        #print(self.squares)
+        #print(sys.getrecursionlimit())
         #print(self.visited)
-    
+   
+    def reinit(self, size):
+        self.visited = numpy.full((size, size), False, dtype=bool)
+        self.visited[int(numpy.floor(size / 2 - 1))][int(numpy.floor(size / 2 - 1))] = True
+        self.piece.reinit((int(numpy.floor(size / 2) - 1), int(numpy.floor(size / 2) - 1)), 'random')
+
     def getnum(self, location):
         return self.squares[location[0]][location[1]]
 
