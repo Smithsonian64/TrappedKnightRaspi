@@ -1,4 +1,4 @@
-import board
+import tkboard
 import piece
 import pygame
 import numpy
@@ -6,6 +6,7 @@ import time
 import sys
 from pygame.locals import *
 import trappedknight
+import langtonsant
 
 screensize = (800, 480)
 
@@ -19,6 +20,7 @@ def main():
     pygame.display.update()
 
     tk = trappedknight.TrappedKnight((800, 480), screen)
+    la = langtonsant.LangtonsAnt((800, 480), screen, 'RRLLLRLLLRRR')
 
     running = True
 
@@ -27,9 +29,11 @@ def main():
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 running = False
 
-        tk.makemoves()
-        tk.drawgrid()
-        tk.reinit()
+        #tk.makemoves()
+        #tk.drawgrid()
+        #tk.reinit()
+
+        la.makemoves()
 
         # pygame.display.update()
 

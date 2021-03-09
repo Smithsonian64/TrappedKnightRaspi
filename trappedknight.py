@@ -1,4 +1,4 @@
-import board
+import tkboard
 import piece
 import pygame
 import numpy
@@ -33,7 +33,7 @@ class TrappedKnight:
         value[()] = (0, 0)
         self.screencoords = numpy.full((self.size, self.size), value, dtype=object)
 
-        self.b = board.Board(self.size)
+        self.b = tkboard.TKBoard(self.size)
 
         self.origin = self.b.piece.location
 

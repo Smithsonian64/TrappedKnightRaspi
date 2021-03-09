@@ -3,7 +3,7 @@ import piece
 import pygame
 import sys
 
-class Board:
+class TKBoard:
     def __init__(self, size):
         self.size = size
         self.squares = self.makespiral(size)
@@ -12,7 +12,7 @@ class Board:
         self.piece = piece.Piece((int(numpy.floor(size / 2) - 1), int(numpy.floor(size / 2) - 1)), 'random')
         
         
-        print(self.squares)
+        #print(self.squares)
         #print(sys.getrecursionlimit())
         #print(self.visited)
    
