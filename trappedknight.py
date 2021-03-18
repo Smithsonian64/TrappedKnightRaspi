@@ -19,7 +19,7 @@ class TrappedKnight:
 
 
         self.size = 100
-        self.delay = 0.00
+        self.delay = 0.01
         self.xoffset = 1
         self.width = screensize[0]
         self.height = screensize[1]
@@ -44,6 +44,7 @@ class TrappedKnight:
         fontpath = "FreeMono.ttf"
 
         self.font = pygame.font.Font(fontpath, 30)
+        self.drawgrid()
 
 
     def drawgrid(self):
@@ -97,7 +98,7 @@ class TrappedKnight:
             pygame.draw.line(self.screen, (255, 0, 255), self.screencoords[lastlocation[0]][lastlocation[1]], self.screencoords[self.b.piece.location[0]][self.b.piece.location[1]])
             time.sleep(self.delay)
             pygame.display.update()
-
+        self.reinit()
         return
 
     def onscreen(self, x):

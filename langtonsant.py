@@ -28,6 +28,8 @@ class LangtonsAnt:
         self.colorValues = [(0, 0, 0), (255, 255, 255), (255, 0, 0), (0, 255, 0), (0, 0, 255), (255, 255, 0), (255, 0, 255), (0, 255, 255), (255, 128, 0), (0, 255, 128), (128, 0, 255), (128, 0, 0)]
         self.rules = self.getrandomrules()
 
+        self.rules = self.getrandomrules()
+
         value = numpy.empty((), dtype=object)
         value[()] = (0, 0)
 
@@ -46,12 +48,13 @@ class LangtonsAnt:
 
         self.drawgrid()
 
-        print(self.screencoords)
 
         print(self.rules)
 
     def makemoves(self):
         while True:
+            if self.board.ant.location[0] >= len(self.board.squares) or self.board.ant.location[0] < 0 or self.board.ant.location[1] >= len(self.board.squares[0]) or self.board.ant.location[1] < 0:
+                break
             color = self.getcolor(self.board.ant.location)
 
             if Colors(color.value).value == len(self.rules) - 1:
@@ -64,15 +67,28 @@ class LangtonsAnt:
             else:
                 self.board.ant.turnright()
 
-            pygame.draw.rect(self.screen, self.colorValues[color.value], (self.screencoords[self.board.ant.location[0]][self.board.ant.location[1]][0], self.screencoords[self.board.ant.location[0]][self.board.ant.location[1]][1], int(self.xinterval), int(self.yinterval)))
+            pygame.draw.rect(self.screen, self.colorValues[color.value], (self.screencoords[self.board.ant.location[0]][self.board.ant.location[1]][0], self.screencoords[self.board.ant.location[0]][self.board.ant.location[1]][1], int(self.xinterval), int(self.yinterval+1)))
 
             self.board.ant.moveforward()
 
             pygame.display.update()
 
-            if self.board.ant.location[0] >= self.board.size[0] or self.board.ant.location[1] >= self.board.size[1] or \
-                    self.board.ant.location[0] < 0 or self.board.ant.location[1] < 0:
-                return
+
+
+            if self.board.ant.location[0] < 0:
+                print("should error out")
+                break
+
+            if self.board.ant.location[0] >= self.board.size[0] or self.board.ant.location[0] >= self.board.size[1] or self.board.ant.location[1] < 0 or self.board.ant.location[0] < 0:
+                break
+
+        self.reinit()
+
+    def reinit(self):
+        self.screen.fill((0, 0, 0))
+        pygame.display.update()
+        self.board = laboard.LABoard(self.size, self.screen)
+        self.rules = self.getrandomrules()
 
     def getcolor(self, index):
         return Colors(self.board.squares[index[0]][index[1]])
@@ -86,11 +102,14 @@ class LangtonsAnt:
             else:
                 temp.append('R')
 
+        if not 'R' in tuple(temp) and 'L' in tuple(temp):
+            temp = self.getrandomrules()
+
         return tuple(temp)
 
     def drawgrid(self):
-        self.xinterval = (self.width - self.xoffset * 2) / (self.size[0] - 1)
-        self.yinterval = (self.height - self.yoffset * 2) / (self.size[1] - 1)
+        self.xinterval = (self.width - self.xoffset * 2) / (self.size[0])
+        self.yinterval = (self.height - self.yoffset * 2) / (self.size[1])
 
         for i in range(len(self.board.squares)):
             for j in range(len(self.board.squares[0])):

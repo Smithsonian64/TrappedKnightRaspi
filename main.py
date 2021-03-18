@@ -7,6 +7,7 @@ import sys
 from pygame.locals import *
 import trappedknight
 import langtonsant
+import gameoflife
 
 screensize = (800, 480)
 
@@ -21,6 +22,7 @@ def main():
 
     tk = trappedknight.TrappedKnight((800, 480), screen)
     la = langtonsant.LangtonsAnt((800, 480), screen, 'RRLLLRLLLRRR')
+    gol = gameoflife.GameOfLife((800, 400), screen)
 
     running = True
 
@@ -33,7 +35,9 @@ def main():
         #tk.drawgrid()
         #tk.reinit()
 
-        la.makemoves()
+        #la.makemoves()
+        #tk.makemoves()
+        gol.makemoves()
 
         # pygame.display.update()
 
