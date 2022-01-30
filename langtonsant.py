@@ -3,6 +3,7 @@ import pygame
 import random
 import numpy
 from enum import IntEnum
+import time
 
 
 class Colors(IntEnum):
@@ -48,13 +49,17 @@ class LangtonsAnt:
 
         self.drawgrid()
 
+        self.starttime = time.time()
+        self.duration = random.randint(30, 60)
 
-        print(self.rules)
 
     def makemoves(self):
+        print(self.rules)
         while True:
             if self.board.ant.location[0] >= len(self.board.squares) or self.board.ant.location[0] < 0 or self.board.ant.location[1] >= len(self.board.squares[0]) or self.board.ant.location[1] < 0:
                 break
+
+
             color = self.getcolor(self.board.ant.location)
 
             if Colors(color.value).value == len(self.rules) - 1:
@@ -73,7 +78,16 @@ class LangtonsAnt:
 
             pygame.display.update()
 
+            if time.time() - self.starttime > self.duration:
+                self.screen.fill((0, 0, 0))
+                pygame.display.update()
+                return
 
+            for event in pygame.event.get():
+                if event == pygame.KEYDOWN and event == pygame.K_ESCAPE:
+                    break
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                    return
 
             if self.board.ant.location[0] < 0:
                 print("should error out")
@@ -103,7 +117,7 @@ class LangtonsAnt:
                 temp.append('R')
 
         if not 'R' in tuple(temp) and 'L' in tuple(temp):
-            temp = self.getrandomrules()
+            return self.getrandomrules()
 
         return tuple(temp)
 

@@ -8,6 +8,8 @@ from pygame.locals import *
 import trappedknight
 import langtonsant
 import gameoflife
+import turingmachine
+import random
 
 screensize = (800, 480)
 
@@ -20,24 +22,33 @@ def main():
     screen.fill((0, 0, 0))
     pygame.display.update()
 
-    tk = trappedknight.TrappedKnight((800, 480), screen)
-    la = langtonsant.LangtonsAnt((800, 480), screen, 'RRLLLRLLLRRR')
-    gol = gameoflife.GameOfLife((800, 400), screen)
+    #tk = trappedknight.TrappedKnight((800, 480), screen)
+    #la = langtonsant.LangtonsAnt((800, 480), screen, 'RRLLLRLLLRRR')
+    #gol = gameoflife.GameOfLife((800, 480), screen)
+    #tm = turingmachine.TuringMachine((800, 480), screen)
 
     running = True
 
     while running:
+        index = random.randint(0, 3)
+
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 running = False
 
-        #tk.makemoves()
-        #tk.drawgrid()
-        #tk.reinit()
+        if index == 0:
+            tk = trappedknight.TrappedKnight((800, 480), screen)
+            tk.makemoves()
+        elif index == 1:
+            la = langtonsant.LangtonsAnt((800, 480), screen, 'RRLLLRLLLRRR')
+            la.makemoves()
+        elif index == 2:
+            gol = gameoflife.GameOfLife((800, 480), screen)
+            gol.makemoves()
+        elif index == 3:
+            tm = turingmachine.TuringMachine((800, 480), screen)
+            tm.runmachine()
 
-        #la.makemoves()
-        #tk.makemoves()
-        gol.makemoves()
 
         # pygame.display.update()
 
